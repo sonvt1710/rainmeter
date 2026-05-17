@@ -7,25 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022
-    steps:
-      - name: Install NSIS
-        run: choco install nsis --version=3.12.0 --no-progress
-
-      - name: Clone repo
-        uses: actions/checkout@v5
-
-      - name: Build Rainmeter
-        run: cd Build && Build.bat pre 0.0.0.0
-        shell: cmd
-
-      - name: Build installer
-        run: cd Build && Build.bat installer 0.0.0.0
-        shell: cmd
-
-      - name: Upload installer
-        uses: actions/upload-artifact@v7
-        with:
-          path: Build/Rainmeter-*.exe
-          archive: false
-          if-no-files-found: error
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      version: v0.0.0.0
+      sign: false
